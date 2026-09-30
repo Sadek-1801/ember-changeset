@@ -64,6 +64,17 @@ export class EmberChangeset extends BufferedChangeset {
   getDeep = safeGet;
   mergeDeep = mergeDeep;
 
+  // Ember proxies and objects with their own `unknownProperty` answer keys
+  // that `in` cannot see.
+  contentHasKey(content, key) {
+    return (
+      isProxy(content) ||
+      (content !== null &&
+        typeof content === 'object' &&
+        'unknownProperty' in content) ||
+      super.contentHasKey(content, key)
+    );
+  }
   safeGet(obj, key) {
     if (Model && obj.relationshipFor?.(key)?.meta?.kind == 'belongsTo') {
       return obj.belongsTo(key).value();
