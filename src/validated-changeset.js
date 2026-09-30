@@ -69,9 +69,12 @@ export class EmberValidationChangeset extends ValidationChangeset {
       super.contentHasKey(content, key)
     );
   }
+
   safeGet(obj, key) {
     if (
       Model &&
+      obj !== null &&
+      typeof obj === 'object' &&
       'relationshipFor' in obj &&
       obj.relationshipFor(key)?.meta?.kind == 'belongsTo'
     ) {

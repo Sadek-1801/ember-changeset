@@ -1,4 +1,4 @@
-import { Changeset } from 'ember-changeset';
+import { Changeset, EmberChangeset } from 'ember-changeset';
 import EmberObject, { get } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
@@ -55,5 +55,11 @@ module('Unit | strict content', function (hooks) {
     assert.strictEqual(get(dummy, 'title'), 'unknown:title');
     assert.strictEqual(dummy.get('title'), 'unknown:title');
     assert.strictEqual(dummy.title, 'unknown:title');
+  });
+
+  test('safeGet reads a key off a primitive', function (assert) {
+    const dummy = new EmberChangeset({});
+
+    assert.strictEqual(dummy.safeGet('About', 'length'), 5);
   });
 });
