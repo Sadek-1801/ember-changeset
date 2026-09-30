@@ -26,6 +26,14 @@ module('Unit | strict content', function (hooks) {
     assert.strictEqual(get(dummy, 'title'), undefined);
   });
 
+  test('sets a strict record field', function (assert) {
+    const dummy = Changeset(strictRecord({ title: 'About' }));
+
+    dummy.set('title', 'Contact');
+
+    assert.strictEqual(dummy.get('title'), 'Contact');
+  });
+
   test('reads a key an ObjectProxy forwards to its content', function (assert) {
     const dummy = Changeset(
       ObjectProxy.create({ content: { title: 'About' } }),

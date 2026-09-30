@@ -76,7 +76,11 @@ export class EmberChangeset extends BufferedChangeset {
     );
   }
   safeGet(obj, key) {
-    if (Model && obj.relationshipFor?.(key)?.meta?.kind == 'belongsTo') {
+    if (
+      Model &&
+      'relationshipFor' in obj &&
+      obj.relationshipFor(key)?.meta?.kind == 'belongsTo'
+    ) {
       return obj.belongsTo(key).value();
     }
     return safeGet(obj, key);
